@@ -2,15 +2,28 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 
 int index_for_storing_edges =0;
 
+void printRoutingTables(graph* topology){
+    int v = topology->numVertex;
+    for(int i=0;i<v;i++){
+//        printf("%s",topology->routersArray[i].routerName);
+        printf("\nRouting Table for %s \n",topology->routersArray[i].routerName);
+        for(int j=0;j<v;j++){
+            printf("\t%s      %d\n",topology->routersArray[i].rt.destinationRouters[j].routerName, topology->routersArray[j].rt.costArray[j]);
+        }
+    }
+}
+
 void printEdges(graph* topology,int numEdges){
 
-   for(int i=0;i<numEdges;i++){
-   	edge link = topology->edgesArray[i];
-   	printf("\n\tNode Name : %s ::\n\t Neighbour Node: %s,\n\t cost = %u\n",
-   		link.intf1.attachedNode->routerName,link.intf2.attachedNode->routerName, link.cost);
+    printf("\n\nPrinting All the Edges:\n");
+    for(int i=0;i<numEdges;i++){
+        edge link = topology->edgesArray[i];
+        printf("\n\tNode Name : %s ::\n\t Neighbour Node: %s,\n\t cost = %u\n",
+               link.intf1.attachedNode->routerName,link.intf2.attachedNode->routerName, link.cost);
    }
 }
 
@@ -46,6 +59,7 @@ void printGraph(graph* topology){
     int e = topology->numEdges;
     interface *intf;
 
+    printf("\n\n Traversing Network Topology:\n");
     for(int i=0;i<v;i++){
         printf("%s ->",topology->routersArray[i].routerName);   // printing router name;
         for(int j=0;j<e;j++){
@@ -90,6 +104,21 @@ void addEdge(graph *topology ,node* node1 , node* node2, char* from_, char* to_,
     topology->edgesArray[index_for_storing_edges++] = *link;
 }
 
+void initializeRoutingTables(graph* topology){
+    int v = topology->numVertex;
+
+    for(int i=0;i<v;i++){
+        for(int j=0;j<v;j++) {
+            topology->routersArray[i].rt.destinationRouters[j] = *(topology->routersArray[j].intf[0]->attachedNode);
+            topology->routersArray[i].rt.costArray[j] = INT_MAX;
+        }
+    }
+}
+
+void createRoutingTable(routing_table* rt,int numVertex){
+    rt->destinationRouters = (node*) malloc(numVertex * sizeof(node));
+    rt->costArray = (int *) malloc(numVertex * sizeof(int));
+}
 
 void createGraphNodes(node* router, char *name){
     strncpy(router->routerName,name,32);
@@ -104,12 +133,12 @@ graph *createGraph(int vertex,int edges){
 
     topology->routersArray = (node*) malloc(vertex* sizeof(node));		// array of nodes
     
-    
     topology->edgesArray =   (edge*) malloc(edges* sizeof(edge));	// array holding edges
     
     for(int i=0;i<vertex;i++){
         char name[] = "RouterX";
         name[6] = i+'0';
+        createRoutingTable(&topology->routersArray[i].rt, topology->numVertex);
         createGraphNodes(&topology->routersArray[i], name);
     }
 
