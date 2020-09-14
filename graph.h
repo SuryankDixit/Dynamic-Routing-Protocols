@@ -8,6 +8,8 @@ typedef struct Node node;
 typedef struct Interface interface;
 typedef struct Edge edge;
 
+
+
 typedef struct Node{
 
     char routerName[NAME_SIZE];
@@ -34,6 +36,7 @@ typedef struct Graph{
 
     int numVertex,numEdges;
     node *routersArray;
+    edge *edgesArray;
 
 }graph;
 
@@ -49,8 +52,10 @@ void printInterface(interface *intf);
 
 node *getNeighbourNode(interface *intf);
 
-void addEdge(node* node1 , node* router2, char* name1, char* name2, int cost);
+void addEdge(graph* topology,node* node1 , node* router2, char* name1, char* name2, int cost);
 
 int getEmptyInterfaceSlot();
+
+void printEdges(graph* topology,int numEdges);
 
 #endif
