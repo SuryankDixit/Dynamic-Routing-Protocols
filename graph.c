@@ -3,6 +3,18 @@
 #include <string.h>
 #include <stdlib.h>
 
+int index_for_storing_edges =0;
+
+void printEdges(graph* topology,int numEdges){
+
+   for(int i=0;i<numEdges;i++){
+   	edge link = topology->edgesArray[i];
+   	printf("\n\tNode Name : %s ::\n\t Neighbour Node: %s,\n\t cost = %u\n",
+   		link.intf1.attachedNode->routerName,link.intf2.attachedNode->routerName, link.cost);
+   }
+}
+
+
 node *getNeighbourNode(interface *intf) {    // Each edge has two ends which means 2 nodes, so this function returns the node that is on other end of the edge.
     edge *link = intf->attachedEdge;
     if(&link->intf1 == intf)
@@ -44,7 +56,7 @@ void printGraph(graph* topology){
         }
     }
 }
-void addEdge(node* node1 , node* node2, char* from_, char* to_, int cost){
+void addEdge(graph *topology ,node* node1 , node* node2, char* from_, char* to_, int cost){
 
     edge *link = (edge*) malloc(sizeof(edge));
 
@@ -75,6 +87,7 @@ void addEdge(node* node1 , node* node2, char* from_, char* to_, int cost){
         exit(0);
     }
     node2->intf[emptyInterfaceSlot] = &link->intf2;
+    topology->edgesArray[index_for_storing_edges++] = *link;
 }
 
 
@@ -89,8 +102,11 @@ graph *createGraph(int vertex,int edges){
     topology->numVertex = vertex;
     topology->numEdges = edges;
 
-    topology->routersArray = (node*) malloc(vertex* sizeof(node));
-
+    topology->routersArray = (node*) malloc(vertex* sizeof(node));		// array of nodes
+    
+    
+    topology->edgesArray =   (edge*) malloc(edges* sizeof(edge));	// array holding edges
+    
     for(int i=0;i<vertex;i++){
         char name[] = "RouterX";
         name[6] = i+'0';
