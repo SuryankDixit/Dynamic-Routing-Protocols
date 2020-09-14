@@ -34,10 +34,14 @@ void buildTopology(){
     addEdge(topology,router0,router1,"eth0/0","eth0/1",10);
     addEdge(topology,router1,router2,"eth0/2","eth0/1",15);
     addEdge(topology,router2,router0,"eth0/2","eth0/2",20);
-    
-    printEdges(topology,edges);
+
+    initializeRoutingTables(topology);
 
     printGraph(topology);
+
+    printRoutingTables(topology);
+
+    printEdges(topology,edges);
     
     
 }
