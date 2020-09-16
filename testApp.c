@@ -1,7 +1,16 @@
 #include "graph.h"
+void buildFirstTopology();
+void buildSecondTopology();
+void buildThirdTopology();
+void buildFourthTopology();
 
 int main(){
 
-    buildTopology();
+    // buildFirstTopology();
+    // buildSecondTopology();
+    // buildThirdTopology();
+    buildFourthTopology();
+    
     return 0;
 }
+
