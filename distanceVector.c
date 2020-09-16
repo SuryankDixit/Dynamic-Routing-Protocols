@@ -6,7 +6,7 @@
 #include <limits.h>
 
 
-void updatedBellmanFord(graph *topology, int numVertex, int numEdges, node* sourceNode){
+void updatedBellmanFord(graph *topology, int numVertex, int numEdges){
      
     //  int index = getIndexOfNode(sourceNode,topology);
      int v = topology->numVertex;
@@ -100,5 +100,3 @@ void bellmanFord(graph *topology, int numVertex, int numEdges, node* sourceNode,
                 topology->routersArray[index].rt.destinationRouters[i].routerName, topology->routersArray[index].rt.costArray[i]);
     }
 }
-
-

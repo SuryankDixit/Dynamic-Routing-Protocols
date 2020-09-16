@@ -1,6 +1,97 @@
 #include "graph.h"
 #include "distanceVector.h"
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+void buildRandomGeneratedTopology(){
+
+        int numVertex;
+        int numEdges;
+
+        printf("Enter number of vertices: ");
+        scanf("%d",&numVertex);
+        printf("Enter number of edges: ");
+        scanf("%d",&numEdges);
+
+        graph *topology = createGraph(numVertex,numEdges);
+
+        node* routers[numVertex];
+        int indexForRouters =0;
+
+        for(int i =0; i<numVertex; i++){
+
+            node *router = & (topology->routersArray[i]);
+            routers[indexForRouters++] = router;
+        }
+
+
+        srand(time(0));
+        for(int i = 0; i < numEdges; i++){
+
+            int indexFromRouter = rand() % numVertex;
+            int indexToRouter   = rand() % numVertex;
+
+            // printf("\n%d    %d\n",indexFromRouter,indexToRouter);
+
+            if(indexFromRouter == indexToRouter){
+                i--;
+                continue;
+            }
+
+            node* fromRouter = routers[ indexFromRouter ];
+            node* toRouter   = routers[ indexToRouter ];
+
+            int cost = rand() % 100;
+
+            char intf1[NAME_SIZE] = "eth0/";
+            char intf2[NAME_SIZE] = "eth0/";
+
+            int index1 = 5;
+            int index2 = 5;
+
+            int num1 = i;
+            int num2 = (i+1) % numEdges;
+
+            char str1[NAME_SIZE];
+            char str2[NAME_SIZE];
+
+            my_itoa(num1, str1);
+            my_itoa(num2, str2);
+
+            // printf("%s  %s\n",str1,str2);
+
+            if(str1 != NULL){
+                
+                for(int j = 0; str1[j] != '\0'; j++){
+                
+                    char ch = str1[j];
+                    intf1[index1++] = ch;
+                }
+            }
+            
+            if(str2 != NULL){
+
+                for(int j = 0; str2[j] != '\0'; j++){
+                
+                    char ch = str2[j];
+                    intf2[index2++] = ch;
+                }
+            }
+
+            addEdge(topology,fromRouter,toRouter,intf1,intf2,cost);
+        }
+
+        printGraph(topology);
+        initializeRoutingTables(topology);
+        printRoutingTables(topology);
+        activateTopology(topology);
+        printRoutingTables(topology);
+        // updatedBellmanFord(topology,numVertex,numEdges);
+	    // printRoutingTables(topology);
+
+}
+
 
 void buildFirstTopology(){
 
@@ -47,7 +138,7 @@ void buildFirstTopology(){
 
 	// bellmanFord(topology,vertex,edges,router0,0);
 
-    updatedBellmanFord(topology,vertex,edges,router0);
+    updatedBellmanFord(topology,vertex,edges);
 
 	printRoutingTables(topology);
 
@@ -136,7 +227,7 @@ void buildSecondTopology(){
 
 	// bellmanFord(topology,vertex,edges,router9,9);
 
-    updatedBellmanFord(topology,vertex,edges,router3);
+    updatedBellmanFord(topology,vertex,edges);
 
 	printRoutingTables(topology);
 
@@ -153,41 +244,6 @@ void buildSecondTopology(){
     
 }
 
-
-void buildThirdTopology(){
-
-    int vertex = 5;
-    int edges = 5;
-    graph *topology = createGraph(vertex,edges);  	// Graph creation
-
-  
-    node *router0 = & (topology->routersArray[0]);
-    node *router1 = & (topology->routersArray[1]);
-    node *router2 = & (topology->routersArray[2]);
-    node *router3 = & (topology->routersArray[3]);
-    node *router4 = & (topology->routersArray[4]);
-    
-    
-    addEdge(topology,router0,router1,"eth0/0","eth0/1",1);
-    addEdge(topology,router1,router2,"eth0/2","eth0/1",6);
-    addEdge(topology,router2,router3,"eth0/2","eth0/2",2);
-    addEdge(topology,router3,router4,"eth0/2","eth0/2",4);
-    addEdge(topology,router4,router1,"eth0/2","eth0/2",3);
-
-    initializeRoutingTables(topology);
-
-    activateTopology(topology);
-
-    // printGraph(topology);
-    // printRoutingTables(topology);
-    // printEdges(topology,edges);
-    // bellmanFord(topology,vertex,edges,router0,0);
-
-    updatedBellmanFord(topology,vertex,edges,router0);
-
-	printRoutingTables(topology);
-    
-}
 
 void buildFourthTopology(){
 
@@ -244,7 +300,7 @@ void buildFourthTopology(){
     // clock_t t; 
     // t = clock();
     
-    updatedBellmanFord(topology,vertex,edges,router0); 
+    updatedBellmanFord(topology,vertex,edges); 
     
     //  t = clock() - t; 
     // double time_taken = ((double)t)/CLOCKS_PER_SEC;
@@ -252,4 +308,34 @@ void buildFourthTopology(){
 
 	printRoutingTables(topology);
     
+}
+
+
+
+void buildThirdTopology(){
+
+    int vertex = 5;
+    int edges = 5;
+    graph *topology = createGraph(vertex,edges);  	// Graph creation
+
+    node *router0 = & (topology->routersArray[0]);
+    node *router1 = & (topology->routersArray[1]);
+    node *router2 = & (topology->routersArray[2]);
+    node *router3 = & (topology->routersArray[3]);
+    node *router4 = & (topology->routersArray[4]);
+    
+    addEdge(topology,router0,router1,"eth0/0","eth0/1",1);
+    addEdge(topology,router1,router2,"eth0/2","eth0/1",6);
+    addEdge(topology,router2,router3,"eth0/2","eth0/2",2);
+    addEdge(topology,router3,router4,"eth0/2","eth0/2",4);
+    addEdge(topology,router4,router1,"eth0/2","eth0/2",3);
+
+    initializeRoutingTables(topology);
+    activateTopology(topology);
+    // printGraph(topology);
+    // printRoutingTables(topology);
+    // printEdges(topology,edges);
+    // bellmanFord(topology,vertex,edges,router0,0);
+    updatedBellmanFord(topology,vertex,edges);
+	printRoutingTables(topology);
 }

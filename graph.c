@@ -114,8 +114,9 @@ void initializeRoutingTables(graph* topology){
     int v = topology->numVertex;
 
     for(int i=0;i<v;i++){
+        // printf("\n%s->\n",topology->routersArray[i].routerName);
         for(int j=0;j<v;j++) {
-            topology->routersArray[i].rt.destinationRouters[j] = *(topology->routersArray[j].intf[0]->attachedNode);
+            topology->routersArray[i].rt.destinationRouters[j] = (topology->routersArray[j]);
             topology->routersArray[i].rt.costArray[j] = INT_MAX;
             // topology->routersArray[i].rt.viaRouters[j] = NULL;
         }
@@ -184,7 +185,7 @@ void printGraph(graph* topology){
 
     printf("\n\n Traversing Network Topology:\n");
     for(int i=0;i<v;i++){
-        printf("%s ->",topology->routersArray[i].routerName);   // printing router name;
+        printf("%s ->\n",topology->routersArray[i].routerName);   // printing router name;
         for(int j=0;j<e;j++){
             intf = topology->routersArray[i].intf[j];
             if(!intf)
@@ -233,8 +234,7 @@ void printEdges(graph* topology,int numEdges){
 
 char *my_itoa(int num, char *str)
 {
-        if(str == NULL)
-        {
+        if(str == NULL){
                 return NULL;
         }
         sprintf(str, "%d", num);
