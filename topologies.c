@@ -1,4 +1,5 @@
 #include "graph.h"
+#include "distanceVector.h"
 #include <stdio.h>
 
 void buildFirstTopology(){
@@ -9,20 +10,20 @@ void buildFirstTopology(){
 
     /*
 				   
-				  		  +-----------+
+				   +-----------+
 		              0/2 |   R0      | 0/0					10
 		 +----------------+           +--------------------------+
-		 |     	   		  | 	      |                          |
+		 |     	   | 	       |                          |
 		 |                +-----------+                          |
 	30	 |                                                       |
 		 |                                                       |
 		 |                                                       |
-		 |                                            	   		 |
+		 |                                            	   |
 		 |0/2                                                    |0/1
 	     +---+---+                                              +----+-----+
 	     |       |0/1                                        0/2|          |
 	     | R2    +----------------------------------------------+    R1    |
-	     |       |               15       	      		        |          |
+	     |       |               15       	      	      |          |
 	     +-------+                                              +----------+
 	   						
 
@@ -190,7 +191,7 @@ void buildThirdTopology(){
 
 void buildFourthTopology(){
 
-    int vertex = 10;
+    int vertex = 12;
     int edges = 24;
     graph *topology = createGraph(vertex,edges);  	// Graph creation
 
@@ -204,6 +205,9 @@ void buildFourthTopology(){
     node *router7 = & (topology->routersArray[7]);
     node *router8 = & (topology->routersArray[8]);
     node *router9 = & (topology->routersArray[9]);
+    node *router10 = & (topology->routersArray[10]);
+    node *router11 = & (topology->routersArray[11]);
+    // node *router12 = & (topology->routersArray[12]);
     
     addEdge(topology,router0,router1,"eth0/1","eth1/1",1);
     addEdge(topology,router0,router2,"eth0/2","eth2/1",3);
@@ -229,18 +233,22 @@ void buildFourthTopology(){
     addEdge(topology,router7,router8,"eth7/8","eth8/8",7);
     addEdge(topology,router7,router9,"eth7/9","eth9/8",14);
     addEdge(topology,router8,router9,"eth8/9","eth9/9",21);
+    addEdge(topology,router8,router10,"eth8/9","eth9/9",21);
+    addEdge(topology,router9,router11,"eth8/9","eth9/9",21);
+    addEdge(topology,router10,router11,"eth8/9","eth9/9",21);
     
 
     initializeRoutingTables(topology);
     activateTopology(topology);
 
-    // printGraph(topology);
-
-    // printRoutingTables(topology);
-
-    // printEdges(topology,edges);
-
-    updatedBellmanFord(topology,vertex,edges,router0);
+    // clock_t t; 
+    // t = clock();
+    
+    updatedBellmanFord(topology,vertex,edges,router0); 
+    
+    //  t = clock() - t; 
+    // double time_taken = ((double)t)/CLOCKS_PER_SEC;
+    // printf("Time taken : %f\n", time_taken);
 
 	printRoutingTables(topology);
     
