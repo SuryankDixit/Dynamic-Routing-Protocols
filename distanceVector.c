@@ -6,18 +6,12 @@
 
 int updatedBellmanFord(graph *topology, int numVertex, int numEdges,int count){
      
-    //  int index = getIndexOfNode(sourceNode,topology);
      int v = topology->numVertex;
      int e = MAXIMUM_INTERFACE_PER_NODE;
      interface *intf;
-//     int indexForRoutingTable =0;
-     int x =INT_MAX;
 
      for(int times =0; times <v; times++){
         
-        if(x==0)
-            break;
-        x =0;
         for(int i =0; i<v; i++){
 
             node *currentNode = &(topology->routersArray[i]);
@@ -38,8 +32,6 @@ int updatedBellmanFord(graph *topology, int numVertex, int numEdges,int count){
                     
                     if(neighbourNode->rt.costArray[k] != INT_MAX && currentNode->rt.costArray[k] > neighbourNode->rt.costArray[k] + distanceFromCurrentToNeighbourNode){
                         
-                        x++;
-                        count++;
                         currentNode->rt.costArray[k] = neighbourNode->rt.costArray[k] + distanceFromCurrentToNeighbourNode;
                         currentNode->rt.viaRouters[k] = *neighbourNode;
                     }
