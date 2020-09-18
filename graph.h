@@ -1,31 +1,25 @@
 #ifndef GRAPH
 #define GRAPH
 
+#include "networking.h"
+
 #define NAME_SIZE 32
-#define MAXIMUM_INTERFACE_PER_NODE 10
+#define MAXIMUM_INTERFACE_PER_NODE 1000
 
 typedef struct Node node;
 typedef struct Interface interface;
 typedef struct Edge edge;
-typedef struct RoutingTable routing_table;
-
-
-
-typedef struct RoutingTable{
-
-    node *destinationRouters;
-    int *costArray;
-    node *viaRouters;
-
-}routing_table;
+typedef struct Graph graph;
 
 
 
 typedef struct Node{
 
     char routerName[NAME_SIZE];
-    routing_table rt;
     interface *intf[MAXIMUM_INTERFACE_PER_NODE];
+
+    routing_table rt;
+    ip_add loopbackIPAddress;
 
 }node;
 
@@ -36,10 +30,10 @@ typedef struct Interface{
     char interfaceName[NAME_SIZE];
     node *attachedNode;
     edge *attachedEdge;
-//    char ipAddress[16];
-//    char macAddress[16];
-}interface;
 
+    intf_properties interfaceProperties;        // IP address, MAC Address and Subnet Mask;
+
+}interface;
 
 
 typedef struct Edge{
@@ -65,25 +59,13 @@ graph* createGraph(int vertex,int edges);
 
 void createGraphNodes(node* router, char *name);
 
-void createRoutingTable(routing_table* rt,int numVertex);
-
-void addEdge(graph* topology,node* node1 , node* router2, char* name1, char* name2, int cost);
+edge* addEdge(graph* topology,node* node1 , node* router2, char* name1, char* name2, int cost);
 
 void printGraph(graph* topology);
 
 void printInterface(interface *intf);
 
 void printEdges(graph* topology,int numEdges);
-
-
-
-
-//  Routing Tables
-void initializeRoutingTables(graph* topology);
-
-void activateTopology(graph* topology);
-
-void printRoutingTables(graph* topology);
 
 
 
