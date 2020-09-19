@@ -4,7 +4,7 @@
 #include "networking.h"
 
 #define NAME_SIZE 32
-#define MAXIMUM_INTERFACE_PER_NODE 1000
+#define MAXIMUM_INTERFACE_PER_NODE 48
 
 typedef struct Node node;
 typedef struct Interface interface;
@@ -17,6 +17,8 @@ typedef struct Node{
 
     char routerName[NAME_SIZE];
     interface *intf[MAXIMUM_INTERFACE_PER_NODE];
+
+    graph *linkStateDatabase;
 
     routing_table rt;
     ip_add loopbackIPAddress;
@@ -42,6 +44,7 @@ typedef struct Edge{
     interface intf2;
     int cost;
 }edge;
+
 
 typedef struct Graph{
 

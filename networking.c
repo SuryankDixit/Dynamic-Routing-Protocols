@@ -55,6 +55,18 @@ void activateTopology(graph* topology){
     }
 }
 
+void printRoutingTableForSpecificRouter(graph* topology,int i){
+
+    int v = topology->numVertex;
+    node* router = &(topology->routersArray[i]);
+
+    printf("\nRouting Table for %s \n",topology->routersArray[i].routerName);
+    printf("\n\tPath to                 Distance                Via Router(Next Hop)\n\n");
+    for(int j=0;j<v;j++){
+            printf("\t%s                %d                      %s\n",topology->routersArray[i].rt.destinationRouters[j].routerName, topology->routersArray[i].rt.costArray[j], topology->routersArray[i].rt.viaRouters[j].routerName);
+        }
+}
+
 
 void printRoutingTables(graph* topology){
     int v = topology->numVertex;

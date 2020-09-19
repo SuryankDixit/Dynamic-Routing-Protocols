@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-int updatedBellmanFord(graph *topology, int numVertex, int numEdges,int count){
+void updatedBellmanFord(graph *topology, int numVertex, int numEdges,int count){
      
      int v = topology->numVertex;
      int e = MAXIMUM_INTERFACE_PER_NODE;
@@ -39,7 +39,6 @@ int updatedBellmanFord(graph *topology, int numVertex, int numEdges,int count){
             }
         }
      }
-     return count;
 }
 
 

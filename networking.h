@@ -47,6 +47,8 @@ void activateTopology(graph* topology);
 
 void printRoutingTables(graph* topology);
 
+void printRoutingTableForSpecificRouter(graph* topology ,int i);
+
 
 // Interface Properties
 

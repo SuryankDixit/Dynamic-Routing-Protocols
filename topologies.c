@@ -1,5 +1,6 @@
 #include "graph.h"
 #include "distanceVector.h"
+#include "linkState.h"
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -79,6 +80,7 @@ void buildRandomGeneratedTopology(){
             }
 
             edge *link = addEdge(topology,fromRouter,toRouter,intf1,intf2,cost);
+
             char ip1[16] = "10.1.1.1";
             char ip2[16] = "10.1.1.2";
 
@@ -89,8 +91,8 @@ void buildRandomGeneratedTopology(){
                 ip2[3] = x+'0';
             }
             
-            ip1[0] = value+'0';
-            ip2[0] = value+'0';
+            ip1[1] = value+'0';
+            ip2[1] = value+'0';
 
             value++;
             setInterfaceProperties(link, ip1, ip2,24);
@@ -107,14 +109,14 @@ void buildRandomGeneratedTopology(){
         clock_t t; 
         t = clock();
         
-        int count =updatedBellmanFord(topology,numVertex,numEdges,0);
+        updatedBellmanFord(topology,numVertex,numEdges,0);
 
          t = clock() - t; 
         double time_taken = ((double)t)/CLOCKS_PER_SEC;
         
 	    // printRoutingTables(topology);
 
-        printf("Time taken : %f\t%d\n", time_taken,count);
+        printf("Time taken : %f\n", time_taken);
 
 
         // changing edge cost
@@ -179,23 +181,32 @@ void buildFirstTopology(){
     setInterfaceProperties(link2, "20.1.1.1", "20.1.1.2", 24);
     setInterfaceProperties(link3, "30.1.1.1", "30.1.1.2", 24);
 
-    // printf("%s  %d\n", router0->intf[0]->interfaceProperties.ip.ip,  router0->intf[0]->interfaceProperties.subnetMask);
-    // printf("%s  %d\n", router1->intf[0]->interfaceProperties.ip.ip,  router1->intf[0]->interfaceProperties.subnetMask);
-    // printf("%s  %d\n", router2->intf[0]->interfaceProperties.ip.ip,  router2->intf[0]->interfaceProperties.subnetMask);
-
     printGraph(topology);
 
-     initializeRoutingTables(topology);
-     activateTopology(topology);
-     printRoutingTables(topology);
+    // distance vector
 
-	// bellmanFord(topology,vertex,edges,router0,0);
+    //  initializeRoutingTables(topology);
+    //  activateTopology(topology);
+    //  printRoutingTables(topology);
 
-     updatedBellmanFord(topology,vertex,edges,0);
+    //  updatedBellmanFord(topology,vertex,edges,0);
 
-	 printRoutingTables(topology);
+	//  printRoutingTables(topology);
 
-    // bellmanFord(topology,vertex,edges,router0,0);
+
+    // Link State
+
+    initializeRoutingTables(topology);
+    activateTopology(topology);
+
+    doReliableFlooding(topology);
+    int v = topology->numVertex;
+
+    for(int i=0;i<v;i++){
+        printRoutingTableForSpecificRouter(topology->routersArray[i].linkStateDatabase, i);
+    }
+
+    
     
 }
 
