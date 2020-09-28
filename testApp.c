@@ -1,7 +1,18 @@
-#include "graph.h"
+//#include "graph.h"
+void buildFirstTopology();
+void buildSecondTopology();
+void buildThirdTopology();
+void buildFourthTopology();
+void buildRandomGeneratedTopology();
 
 int main(){
 
-    buildTopology();
+   buildFirstTopology();
+    // buildSecondTopology();
+    // buildThirdTopology();
+    // buildFourthTopology();
+    //  buildRandomGeneratedTopology();
+    
     return 0;
 }
+
