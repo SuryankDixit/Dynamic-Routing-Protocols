@@ -14,7 +14,7 @@ void updatedBellmanFord(graph *topology, int numVertex, int numEdges,int count){
         
         for(int i =0; i<v; i++){
 
-            node *currentNode = &(topology->routersArray[i]);
+            node  *currentNode = &(topology->routersArray[i]);
 
             for(int j=0; j<e; j++){
 
@@ -51,7 +51,7 @@ void bellmanFord(graph *topology, int numVertex, int numEdges, node* sourceNode,
 
     distance[index] =0;
 
-    for(int i =0;i <numVertex-1; i++){          // looping n-1 times
+    for(int i =0;i <numVertex-1; i++){          // looping n-1 time
         for(int j =0; j<numEdges; j++){         // looping over arrayEdges
 
             edge link = topology->edgesArray[j];
@@ -71,8 +71,10 @@ void bellmanFord(graph *topology, int numVertex, int numEdges, node* sourceNode,
 
     for(int i =0; i<numEdges; i++){
         edge link = topology->edgesArray[i];
-            int fromNode = getIndexOfNode(link.intf1.attachedNode,topology);
+            
             int toNode   = getIndexOfNode(link.intf2.attachedNode,topology);
+            int fromNode = getIndexOfNode(link.intf1.attachedNode,topology);
+            
             int dis      = link.cost;
 
             if(distance[fromNode] != INT_MAX && distance[toNode] > distance[fromNode] + dis){
