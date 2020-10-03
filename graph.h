@@ -1,6 +1,7 @@
 #ifndef GRAPH
 #define GRAPH
 
+
 #include "networking.h"
 
 #define NAME_SIZE 32
@@ -13,7 +14,7 @@ typedef struct Graph graph;
 
 
 
-typedef struct Node{
+typedef struct Node{                          //creating node
 
     char routerName[NAME_SIZE];
     interface *intf[MAXIMUM_INTERFACE_PER_NODE];
@@ -27,11 +28,11 @@ typedef struct Node{
 
 
 
-typedef struct Interface{
+typedef struct Interface{                  //creating interface
 
     char interfaceName[NAME_SIZE];
-    node *attachedNode;
     edge *attachedEdge;
+    node *attachedNode;
 
     intf_properties interfaceProperties;        // IP address, MAC Address and Subnet Mask;
 
@@ -49,15 +50,15 @@ typedef struct Edge{
 typedef struct Graph{
 
     int numVertex,numEdges;
-    node *routersArray;
     edge *edgesArray;
+    node *routersArray;
 
 }graph;
 
 
 
 
-// Creating Topology
+// Creating Topology of graph
 graph* createGraph(int vertex,int edges);
 
 void createGraphNodes(node* router, char *name);
@@ -66,14 +67,16 @@ edge* addEdge(graph* topology,node* node1 , node* router2, char* name1, char* na
 
 void printGraph(graph* topology);
 
-void printInterface(interface *intf);
-
 void printEdges(graph* topology,int numEdges);
 
+void printInterface(interface *intf);
 
 
 
-// Helper Functions
+
+
+
+// Helper Function for graph
 
 int getEmptyInterfaceSlot();
 
