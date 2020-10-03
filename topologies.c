@@ -102,6 +102,7 @@ void buildRandomGeneratedTopology(){
 
          printGraph(topology);
         initializeRoutingTables(topology);
+	//from network.h file
         // printRoutingTables(topology);
         activateTopology(topology);
         // printRoutingTables(topology);
@@ -200,6 +201,7 @@ void buildFirstTopology(){
     activateTopology(topology);
 
     doReliableFlooding(topology);
+	//to provide topology to every node
     int v = topology->numVertex;
 
     for(int i=0;i<v;i++){
