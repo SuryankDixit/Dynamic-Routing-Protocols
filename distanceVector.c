@@ -1,20 +1,17 @@
 #include "graph.h"
 #include "distanceVector.h"
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <limits.h>
 
-
-void updatedBellmanFord(graph *topology, int numVertex, int numEdges){
+void updatedBellmanFord(graph *topology, int numVertex, int numEdges,int count){
      
-    //  int index = getIndexOfNode(sourceNode,topology);
      int v = topology->numVertex;
      int e = MAXIMUM_INTERFACE_PER_NODE;
      interface *intf;
-     int indexForRoutingTable =0;
 
      for(int times =0; times <v; times++){
+        
         for(int i =0; i<v; i++){
 
             node *currentNode = &(topology->routersArray[i]);
@@ -34,7 +31,7 @@ void updatedBellmanFord(graph *topology, int numVertex, int numEdges){
                     // printf("\n%s  %s\n",currentNode->routerName,neighbourNode->routerName);
                     
                     if(neighbourNode->rt.costArray[k] != INT_MAX && currentNode->rt.costArray[k] > neighbourNode->rt.costArray[k] + distanceFromCurrentToNeighbourNode){
-
+                        
                         currentNode->rt.costArray[k] = neighbourNode->rt.costArray[k] + distanceFromCurrentToNeighbourNode;
                         currentNode->rt.viaRouters[k] = *neighbourNode;
                     }
