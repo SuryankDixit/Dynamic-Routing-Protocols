@@ -5,6 +5,8 @@
 #include <limits.h>
 
 int index_for_storing_edges =0;
+void
+init_udp_socket(node *node);
 
 
 graph *createGraph(int vertex,int edges){
@@ -48,6 +50,8 @@ graph *createGraph(int vertex,int edges){
 void createGraphNodes(node* router, char *name){
     strncpy(router->routerName,name,32);
     router->routerName[NAME_SIZE-1] = '\0';
+
+    init_udp_socket(router);
 
     char ip[16] = "127.0.0.1";
     strncpy(router->loopbackIPAddress.ip,ip,16);
@@ -172,6 +176,21 @@ int getIndexOfNode(node* router,graph* topology){
     return -1;
 }
 
+interface * get_node_if_by_name(node *router, char *if_name){
+
+    int i ;
+    interface *intf;
+
+    for( i = 0 ; i < MAXIMUM_INTERFACE_PER_NODE; i++){
+        intf = router->intf[i];
+        if(!intf) return NULL;
+        if(strncmp(intf->interfaceName, if_name, NAME_SIZE) == 0){
+            return intf;
+        }
+    }
+    return NULL;
+}
+
 
 char *my_itoa(int num, char *str)
 {
@@ -181,5 +200,6 @@ char *my_itoa(int num, char *str)
         sprintf(str, "%d", num);
         return str;
 }
+
 
 

@@ -4,6 +4,18 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
+
+
+void
+network_start_pkt_receiver_thread(graph *topo);
+
+int
+send_pkt_out(char *pkt, unsigned int pkt_size, interface *intf);
+
+interface * get_node_if_by_name(node *router, char *if_name);
+
+
 
 void buildRandomGeneratedTopology(){
 
@@ -185,26 +197,26 @@ void buildFirstTopology(){
 
     // distance vector
 
-    //  initializeRoutingTables(topology);
-    //  activateTopology(topology);
-    //  printRoutingTables(topology);
+     initializeRoutingTables(topology);
+     activateTopology(topology);
+     printRoutingTables(topology);
 
-    //  updatedBellmanFord(topology,vertex,edges,0);
+     updatedBellmanFord(topology,vertex,edges,0);
 
-	//  printRoutingTables(topology);
+	 printRoutingTables(topology);
 
 
     // Link State
 
-    initializeRoutingTables(topology);
-    activateTopology(topology);
+    // initializeRoutingTables(topology);
+    // activateTopology(topology);
 
-    doReliableFlooding(topology);
-    int v = topology->numVertex;
+    // doReliableFlooding(topology);
+    // int v = topology->numVertex;
 
-    for(int i=0;i<v;i++){
-        printRoutingTableForSpecificRouter(topology->routersArray[i].linkStateDatabase, i);
-    }
+    // for(int i=0;i<v;i++){
+    //     printRoutingTableForSpecificRouter(topology->routersArray[i].linkStateDatabase, i);
+    // }
 
     
     
@@ -358,19 +370,39 @@ void buildFourthTopology(){
     addEdge(topology,router10,router11,"eth8/9","eth9/9",21);
     
 
+    // Threads Listening in communiction.c:
+    network_start_pkt_receiver_thread(topology);
+
+    sleep(2);
+
     initializeRoutingTables(topology);
     activateTopology(topology);
-
-    // clock_t t; 
-    // t = clock();
+   
+    clock_t t; 
+    t = clock();
     
     updatedBellmanFord(topology,vertex,edges,0); 
     
-    //  t = clock() - t; 
-    // double time_taken = ((double)t)/CLOCKS_PER_SEC;
-    // printf("Time taken : %f\n", time_taken);
+    t = clock() - t; 
+    double time_taken = ((double)t)/CLOCKS_PER_SEC;
+    printf("Time taken : %f\n", time_taken);
 
-	printRoutingTables(topology);
+    printRoutingTables(topology);
+
+
+    interface *oif = get_node_if_by_name(router10,"eth8/9");
+
+
+    char msg[]="Hello Neighbour Router";
+    send_pkt_out(msg,strlen(msg),oif);
+
+    sleep(20);
+
+ // doReliableFlooding(topology);
+    //dijkstra(topology,0) ;
+    //initializeRoutingTables(router0->linkStateDatabase);
+    //activateTopology(router0->linkStateDatabase);
+	// printRoutingTables(router0->linkStateDatabase);
     
 }
 
@@ -403,3 +435,4 @@ void buildThirdTopology(){
     updatedBellmanFord(topology,vertex,edges,0);
 	printRoutingTables(topology);
 }
+

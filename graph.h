@@ -5,6 +5,7 @@
 
 #define NAME_SIZE 32
 #define MAXIMUM_INTERFACE_PER_NODE 48
+#define IF_NAME_SIZE 16
 
 typedef struct Node node;
 typedef struct Interface interface;
@@ -19,6 +20,9 @@ typedef struct Node{
     interface *intf[MAXIMUM_INTERFACE_PER_NODE];
 
     graph *linkStateDatabase;
+
+    unsigned int udp_port_number;
+    int udp_sock_fd;
 
     routing_table rt;
     ip_add loopbackIPAddress;
@@ -83,5 +87,8 @@ char *my_itoa(int num, char *str);
 
 node *getNeighbourNode(interface *intf);
 
+interface * get_node_if_by_name(node *router, char *if_name);
+
 #endif
+
 

@@ -1,4 +1,4 @@
-//#include "graph.h"
+#include "graph.h"
 void buildFirstTopology();
 void buildSecondTopology();
 void buildThirdTopology();
@@ -7,12 +7,15 @@ void buildRandomGeneratedTopology();
 
 int main(){
 
-   buildFirstTopology();
+//    buildFirstTopology();
     // buildSecondTopology();
     // buildThirdTopology();
-    // buildFourthTopology();
+    buildFourthTopology();
     //  buildRandomGeneratedTopology();
+
+    
     
     return 0;
 }
+
 
