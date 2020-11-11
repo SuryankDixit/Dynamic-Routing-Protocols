@@ -6,7 +6,8 @@ _Static Routing follows user defined routing and routing table is not changed un
 
 
 * **Compile**:    
-  * gcc testApp.c topologies.c graph.c distanceVector.c networking.c
+  * gcc graph.c distanceVector.c linkState.c networking.c testApp.c topologies.c communication.c -lpthread
+
 * **Run**:
   * ./a.out
 * **graph.h**
@@ -21,3 +22,5 @@ _Static Routing follows user defined routing and routing table is not changed un
   * Uses Bellman Ford Algorithm to find the optimal path to route traffic.
 * **testApp.c**:
   * Contains Main Function
+* **communication.c**:
+  * Sockets are managed in this file. Each node of topology is associated with one port.
