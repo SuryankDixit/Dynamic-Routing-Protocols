@@ -17,7 +17,7 @@ interface * get_node_if_by_name(node *router, char *if_name);
 
 
 
-void buildRandomGeneratedTopology(){
+graph* buildRandomGeneratedTopology(){
 
         int value=1;
         int numVertex;
@@ -153,7 +153,7 @@ void buildRandomGeneratedTopology(){
 }
 
 
-void buildFirstTopology(){
+graph* buildFirstTopology(){
 
     int vertex = 3;
     int edges = 3;
@@ -224,7 +224,7 @@ void buildFirstTopology(){
 
 
 
-void buildSecondTopology(){
+graph* buildSecondTopology(){
 
     int vertex = 10;
     int edges = 45;
@@ -321,7 +321,7 @@ void buildSecondTopology(){
 }
 
 
-void buildFourthTopology(){
+graph* buildFourthTopology(){
 
     int vertex = 12;
     int edges = 24;
@@ -375,40 +375,41 @@ void buildFourthTopology(){
 
     sleep(2);
 
-    initializeRoutingTables(topology);
-    activateTopology(topology);
+    // initializeRoutingTables(topology);
+    // activateTopology(topology);
    
-    clock_t t; 
-    t = clock();
+    // clock_t t; 
+    // t = clock();
     
-    updatedBellmanFord(topology,vertex,edges,0); 
+    // updatedBellmanFord(topology,vertex,edges,0); 
     
-    t = clock() - t; 
-    double time_taken = ((double)t)/CLOCKS_PER_SEC;
-    printf("Time taken : %f\n", time_taken);
+    // t = clock() - t; 
+    // double time_taken = ((double)t)/CLOCKS_PER_SEC;
+    // printf("Time taken : %f\n", time_taken);
 
-    printRoutingTables(topology);
-
-
-    interface *oif = get_node_if_by_name(router10,"eth8/9");
+    // printRoutingTables(topology);
 
 
-    char msg[]="Hello Neighbour Router";
-    send_pkt_out(msg,strlen(msg),oif);
+    // interface *oif = get_node_if_by_name(router10,"eth8/9");
 
-    sleep(20);
 
- // doReliableFlooding(topology);
+    // char msg[]="Hello Neighbour Router";
+    // send_pkt_out(msg,strlen(msg),oif);
+
+    // sleep(20);
+
+    // doReliableFlooding(topology);
     //dijkstra(topology,0) ;
     //initializeRoutingTables(router0->linkStateDatabase);
     //activateTopology(router0->linkStateDatabase);
 	// printRoutingTables(router0->linkStateDatabase);
+    return topology;
     
 }
 
 
 
-void buildThirdTopology(){
+graph* buildThirdTopology(){
 
     int vertex = 5;
     int edges = 5;
