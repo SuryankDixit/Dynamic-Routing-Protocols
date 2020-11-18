@@ -1,4 +1,5 @@
 #include "graph.h"
+#include "css.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -136,7 +137,7 @@ void printInterface(interface *intf){
 
     // printf("%s",intf->interfaceProperties.ip.ip);
     // printf("%d",intf->interfaceProperties.subnetMask);
-    printf("\tInterface Name : %s \n\t IP Address: %s/%d,\n\t Neighbour Node: %s,\n\t cost = %u\n\n",
+    printf(ANSI_COLOR_YELLOW"\tInterface Name : %s \n\t IP Address: %s/%d,\n\t Neighbour Node: %s,\n\t cost = %u\n\n"ANSI_COLOR_RESET,
             intf->interfaceName,intf->interfaceProperties.ip.ip,intf->interfaceProperties.subnetMask,neighbourNode->routerName, link->cost);
 }
 

@@ -1,9 +1,10 @@
 #include "graph.h"
-// #include "networking.h"
+#include "networking.h"
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
 #include <stdlib.h>
+#include "css.h"
 
 
 void createRoutingTable(routing_table* rt,int numVertex){
@@ -61,9 +62,11 @@ void printRoutingTableForSpecificRouter(graph* topology,int i){
     node* router = &(topology->routersArray[i]);
 
     printf("\nRouting Table for %s \n",topology->routersArray[i].routerName);
-    printf("\n\tPath to                 Distance                Via Router(Next Hop)\n\n");
+    printf(ANSI_COLOR_CYAN "\n|---------------------------------------------------------------------------|" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_YELLOW "\n\tPath to       |       Distance        |       Via Router(Next Hop)\n");
+    printf(ANSI_COLOR_CYAN "|---------------------------------------------------------------------------|\n" ANSI_COLOR_RESET);
     for(int j=0;j<v;j++){
-            printf("\t%s                %d                      %s\n",topology->routersArray[i].rt.destinationRouters[j].routerName, topology->routersArray[i].rt.costArray[j], topology->routersArray[i].rt.viaRouters[j].routerName);
+            printf(ANSI_COLOR_GREEN"\t%s                %d                      %s\n"ANSI_COLOR_RESET,topology->routersArray[i].rt.destinationRouters[j].routerName, topology->routersArray[i].rt.costArray[j], topology->routersArray[i].rt.viaRouters[j].routerName);
         }
 }
 
@@ -73,9 +76,11 @@ void printRoutingTables(graph* topology){
     for(int i=0;i<v;i++){
 //        printf("%s",topology->routersArray[i].routerName);
         printf("\nRouting Table for %s \n",topology->routersArray[i].routerName);
-        printf("\n\tPath to                 Distance                Via Router(Next Hop)\n\n");
-        for(int j=0;j<v;j++){
-            printf("\t%s                %d                      %s\n",topology->routersArray[i].rt.destinationRouters[j].routerName, topology->routersArray[i].rt.costArray[j], topology->routersArray[i].rt.viaRouters[j].routerName);
+        printf(ANSI_COLOR_CYAN "\n|---------------------------------------------------------------------------|" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_YELLOW "\n\tPath to       |       Distance        |       Via Router(Next Hop)\n");
+    printf(ANSI_COLOR_CYAN "|---------------------------------------------------------------------------|\n" ANSI_COLOR_RESET);
+    for(int j=0;j<v;j++){
+            printf(ANSI_COLOR_GREEN"\t%s                %d                      %s\n"ANSI_COLOR_RESET,topology->routersArray[i].rt.destinationRouters[j].routerName, topology->routersArray[i].rt.costArray[j], topology->routersArray[i].rt.viaRouters[j].routerName);
         }
     }
 }

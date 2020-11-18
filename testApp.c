@@ -4,6 +4,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
+#include <time.h>
+#include "css.h"
+
 
 graph* buildFirstTopology();
 // graph* printRoutingTables(graph*);
@@ -16,23 +19,23 @@ int main(){
 
     while(1){
         system("clear");
-        printf("CHOOSE A TOPOLOGY:\n\n1. FIRST TOPOLOGY\n2. SECOND TOPOLOGY\n3. THIRD TOPOLOGY\n4. FOURTH TOPOLOGY\n5. Generate Random Topologyy based on Number of Vertices and Edges.\n6. EXIT.");
+        printf(ANSI_COLOR_YELLOW "CHOOSE A TOPOLOGY:\n\n1. FIRST TOPOLOGY\n2. SECOND TOPOLOGY\n3. THIRD TOPOLOGY\n4. FOURTH TOPOLOGY\n5. Generate Random Topologyy based on Number of Vertices and Edges.\n6. EXIT."ANSI_COLOR_RESET);
         int choice;	
         printf("\n\nENTER YOUR CHOICE : ");
         scanf("%d",&choice);
         graph* topo;
         switch(choice)
         {
-            case 1: printf("\nFIRST TOPOLOGY BUILT SUCCESSFULLY.");
+            case 1: printf(ANSI_COLOR_GREEN"\nFIRST TOPOLOGY BUILT SUCCESSFULLY."ANSI_COLOR_RESET);
                 topo=buildFirstTopology();
                 break;
-            case 2: printf("\nSECOND TOPOLOGY BUILT SUCCESSFULLY AND ROUTING TABLES INITIALIZED!!!");
+            case 2: printf(ANSI_COLOR_GREEN"\nSECOND TOPOLOGY BUILT SUCCESSFULLY AND ROUTING TABLES INITIALIZED!!!"ANSI_COLOR_RESET);
                 topo=buildSecondTopology();
                 break;
-            case 3: printf("\nTHIRD TOPOLOGY BUILT SUCCESSFULLY AND ROUTING TABLES INITIALIZED!!!");
+            case 3: printf(ANSI_COLOR_GREEN"\nTHIRD TOPOLOGY BUILT SUCCESSFULLY AND ROUTING TABLES INITIALIZED!!!"ANSI_COLOR_RESET);
                 topo=buildThirdTopology();
                 break;
-            case 4: printf("\nFOURTH TOPOLOGY BUILT SUCCESSFULLY.\n");
+            case 4: printf(ANSI_COLOR_GREEN"\nFOURTH TOPOLOGY BUILT SUCCESSFULLY.\n"ANSI_COLOR_RESET);
                 topo=buildFourthTopology();
                 break;
             case 5:
@@ -40,7 +43,8 @@ int main(){
                 break;
             case 6: exit(1);
                 break;
-            default: printf("\nPLEASE ENTER CORRECT CHOICE!!!!");
+            default: printf(ANSI_COLOR_RED"\nPLEASE ENTER CORRECT CHOICE!!!!\n"ANSI_COLOR_RESET);
+                     exit(1);
         }
         int v = topo->numVertex;
         int e = topo->numEdges;
@@ -49,7 +53,7 @@ int main(){
 
         while(1){
             // system("clear");
-            printf("\n1. View Topology.\n2. Choose Routing Protocol to configure your topology.\n3. View Routing Tables.\n4. Go to Main Menu.\n\n");
+            printf(ANSI_COLOR_CYAN"\n1. View Topology.\n2. Choose Routing Protocol to configure your topology.\n3. View Routing Tables.\n4. Go to Main Menu.\n\n"ANSI_COLOR_RESET);
             int option;
             scanf("%d",&option);
             if(option==1){
@@ -59,28 +63,38 @@ int main(){
                 sleep(5);
             }else if(option==2){
                 
-                printf("\na. Distance Vector Routing Protocol.\nb. Link State Routing Protocol.\n\n");
+                printf(ANSI_COLOR_CYAN"\na. Distance Vector Routing Protocol.\nb. Link State Routing Protocol.\n\n"ANSI_COLOR_RESET);
                 char proto;
                 scanf("%s",&proto);
 
-
+                clock_t t; 
+                
                 if(proto=='a'){
+                    t = clock();
                     updatedBellmanFord(topo,v,e,0);
-                }else{
-                    doReliableFlooding(topo);
-                    // dijkstra(fourth_topo,0) ;
+                    t = clock() - t; 
                 }
-                printf("\nRouting Tables Updated.\n");
+                else if(proto=='b'){
+                    initializeRoutingTables(topo);
+                    activateTopology(topo);
+                    doReliableFlooding(topo);
+                    t = clock();
+                    linkState(topo);
+                    t = clock() - t; 
+                }
+                double time_taken = ((double)t)/CLOCKS_PER_SEC;
+                printf(ANSI_COLOR_GREEN"\nRouting Tables Updated.\n"ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_RED"Time taken to Update: %f\n"ANSI_COLOR_RESET,time_taken);
                 sleep(2);
             }else if(option==3){
                 int ch;
-                printf("\n\n1. Show Routing Table of a Specific Router.\n2. Show all Routing Tables.\n");
+                printf(ANSI_COLOR_CYAN"\n\n1. Show Routing Table of a Specific Router.\n2. Show all Routing Tables.\n"ANSI_COLOR_RESET);
                 scanf("%d",&ch);
                 if(ch==2){
                     printRoutingTables(topo);
                 }else{
                     for(int i=0;i<v;i++){
-                        printf("\n%d. Show IP Route Router %d\n",i,i);
+                        printf(ANSI_COLOR_YELLOW"\n%d. Show IP Route Router %d\n"ANSI_COLOR_RESET,i,i);
                     }
                     printf("Choose Command: ");
                     int x;
@@ -88,7 +102,7 @@ int main(){
                     if(x>=0 && x<v){
                         printRoutingTableForSpecificRouter(topo,x);
                     }else{
-                        printf("Check command Again !!");
+                        printf(ANSI_COLOR_RED"Check command Again !!"ANSI_COLOR_RESET);
                     }
                     sleep(2);
                 }
