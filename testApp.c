@@ -81,6 +81,7 @@ int main(){
                     t = clock();
                     linkState(topo);
                     t = clock() - t; 
+                    updatedBellmanFord(topo,v,e,0);
                 }
                 double time_taken = ((double)t)/CLOCKS_PER_SEC;
                 printf(ANSI_COLOR_GREEN"\nRouting Tables Updated.\n"ANSI_COLOR_RESET);
