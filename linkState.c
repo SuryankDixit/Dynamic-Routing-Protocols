@@ -225,7 +225,7 @@ void dijkstra(graph *topology, int src)
 			    { 
 				dist[index] = dist[u] + weight;
 				topology->routersArray[src].rt.costArray[index] = dist[u]+weight; 
-				topology->routersArray[src].rt.viaRouters[index] = *neighbourNode;
+				// topology->routersArray[src].rt.viaRouters[index] = *neighbourNode;
 				// update distance value in min heap also 
 				decreaseKey(minHeap, index, dist[index]); 
 			    }  

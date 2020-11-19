@@ -70,6 +70,8 @@ int main(){
                 clock_t t; 
                 
                 if(proto=='a'){
+                    initializeRoutingTables(topo);
+                    activateTopology(topo);
                     t = clock();
                     updatedBellmanFord(topo,v,e,0);
                     t = clock() - t; 
@@ -81,6 +83,8 @@ int main(){
                     t = clock();
                     linkState(topo);
                     t = clock() - t; 
+                    initializeRoutingTables(topo);
+                    activateTopology(topo);
                     updatedBellmanFord(topo,v,e,0);
                 }
                 double time_taken = ((double)t)/CLOCKS_PER_SEC;
