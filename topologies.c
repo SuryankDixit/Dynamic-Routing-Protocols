@@ -162,22 +162,22 @@ graph* buildFirstTopology(){
     int edges = 3;
     graph *topology = createGraph(vertex,edges);  	// Graph creation
 
-        printf("\n");
-		printf(ANSI_COLOR_YELLOW"		      +-----------+\n");
-        printf("                  0/2 |   R0      | 0/0					10\n");
-        printf("    +-----------------+           +--------------------------+\n");
-        printf("    |     	      | 	  |                         |\n");
-        printf("    |                 +-----------+                          |\n");
-        printf("30  |                                                        |\n");
-        printf("    |                                                        |\n");
-        printf("    |                                                        |\n");
-        printf("    |0/2                                                     |0/1\n");
-        printf("  +-----+---+                                              +----+-----+\n");
-        printf("  |         |0/1                                        0/2|          |\n");
-        printf("  |   R2    +----------------------------------------------+    R1    |\n");
-        printf("  |         |               15       	      	           |          |\n");
-        printf("  |         |               15       	      	           |          |\n");
-        printf("  +---------+                                              +----------+\n"ANSI_COLOR_RESET);
+        printf("\n\n");
+	printf(ANSI_COLOR_YELLOW"						      +-----------+\n");
+        printf("				                  0/2 |   R0      | 0/0					10\n");
+        printf("				    +-----------------+           +--------------------------+\n");
+        printf("				    |     	      | 	  |                          |\n");
+        printf("				    |                 +-----------+                          |\n");
+        printf("				30  |                                                        |\n");
+        printf("				    |                                                        |\n");
+        printf("				    |                                                        |\n");
+        printf("				    |0/2                                                     |0/1\n");
+        printf("				  +-----+---+                                              +----+-----+\n");
+        printf("				  |         |0/1                                        0/2|          |\n");
+        printf("				  |   R2    +----------------------------------------------+    R1    |\n");
+        printf("				  |         |               15       	      	           |          |\n");
+        printf("				  |         |               15       	      	           |          |\n");
+        printf("				  +---------+                                              +----------+\n"ANSI_COLOR_RESET);
 
     /*
 				          +-----------+
