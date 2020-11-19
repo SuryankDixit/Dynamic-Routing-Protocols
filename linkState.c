@@ -42,7 +42,7 @@ struct MinHeap* createMinHeap(int capacity)
          (struct MinHeapNode**) malloc(capacity * sizeof(struct MinHeapNode*)); 
     return minHeap; 
 } 
-/*void doReliableFlooding(graph *topology){
+void doReliableFlooding(graph *topology){
 
     int v = topology->numVertex;
     
@@ -50,7 +50,7 @@ struct MinHeap* createMinHeap(int capacity)
 
         topology->routersArray[i].linkStateDatabase = topology;
     }
-}*/
+}
 
 // A utility function to create a new Min Heap Node *///
 
@@ -159,13 +159,6 @@ bool isInMinHeap(struct MinHeap *minHeap, int v)
    return false; 
 } 
   
-    // A utility function used to print the solution 
-void printArr(int dist[], int n) 
-{ 
-    printf("Vertex   Distance from Source\n"); 
-    for (int i = 0; i < n; ++i) 
-        printf("%d \t\t %d\n", i, dist[i]); 
-} 
   
 // The main function that calulates distances of shortest paths from src to all 
 // vertices. It is a O(ELogV) function 
@@ -238,34 +231,10 @@ void dijkstra(graph *topology, int src)
 			    }  
       	} 
     } 
-  
-    										// print the calculated shortest distances 
-    //printArr(dist, V);
-    //printf("\n");
+      										 
     
-    
-    //printf("\nRouting Table for %s:\n",sourceNode->routerName);
-    // for(int i =0;i <numVertex; i++){
-    //     printf("Cost: %d\n",distance[i]);
-    // }
-   /* for(int i =0;i <V; i++){
-        topology->routersArray[src].rt.costArray[i] = dist[i];
-        // printf("hi %d\n",i);
-        printf("\t%s      %d\n",
-                topology->routersArray[src].rt.destinationRouters[i].routerName, topology->routersArray[src].rt.costArray[i]);
-    } */
 } 
 
-void doReliableFlooding(graph *topology){
-
-    int v = topology->numVertex;
-    
-    for(int i =0; i < v; i++){
-
-        topology->routersArray[i].linkStateDatabase = topology;
-    }
-}
-	
 
 
 void linkState(graph *topology)
