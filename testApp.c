@@ -13,13 +13,13 @@ graph* buildFirstTopology();
 graph* buildSecondTopology();
 graph* buildThirdTopology();
 graph* buildFourthTopology();
-graph* buildRandomGeneratedTopology();
+// graph* buildRandomGeneratedTopology();
 
 int main(){
 
     while(1){
         system("clear");
-        printf(ANSI_COLOR_YELLOW "CHOOSE A TOPOLOGY:\n\n1. FIRST TOPOLOGY\n2. SECOND TOPOLOGY\n3. THIRD TOPOLOGY\n4. FOURTH TOPOLOGY\n5. Generate Random Topologyy based on Number of Vertices and Edges.\n6. EXIT."ANSI_COLOR_RESET);
+        printf(ANSI_COLOR_YELLOW "CHOOSE A TOPOLOGY:\n\n1. FIRST TOPOLOGY\n2. SECOND TOPOLOGY - MESH \n3. THIRD TOPOLOGY - FULL MESH\n4. FOURTH TOPOLOGY - STAR\n5. EXIT."ANSI_COLOR_RESET);
         int choice;	
         printf("\n\nENTER YOUR CHOICE : ");
         scanf("%d",&choice);
@@ -38,10 +38,7 @@ int main(){
             case 4: printf(ANSI_COLOR_GREEN"\nFOURTH TOPOLOGY BUILT SUCCESSFULLY.\n"ANSI_COLOR_RESET);
                 topo=buildFourthTopology();
                 break;
-            case 5:
-                topo=buildRandomGeneratedTopology();
-                break;
-            case 6: exit(1);
+            case 5: exit(1);
                 break;
             default: printf(ANSI_COLOR_RED"\nPLEASE ENTER CORRECT CHOICE!!!!\n"ANSI_COLOR_RESET);
                      exit(1);
@@ -53,7 +50,7 @@ int main(){
 
         while(1){
             // system("clear");
-            printf(ANSI_COLOR_CYAN"\n1. View Topology.\n2. Choose Routing Protocol to configure your topology.\n3. View Routing Tables.\n4. Go to Main Menu.\n\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_CYAN"\n1. View Topology Details.\n2. Choose Routing Protocol to configure your topology.\n3. View Routing Tables.\n4. Go to Main Menu.\n\n"ANSI_COLOR_RESET);
             int option;
             scanf("%d",&option);
             if(option==1){
